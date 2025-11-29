@@ -37,10 +37,17 @@ public class ProductController {
     }
 
     //get by id
-    @GetMapping("/{productId}")
+    @GetMapping("/getById/{productId}")
     public ResponseEntity<ProductResponseDto> getById(@PathVariable String productId)
     {
         return new ResponseEntity<>(productService.getProductById(productId),HttpStatus.OK);
+    }
+
+    //update stock
+    @PutMapping("/Id/{productId}/stock/{quantity}")
+    public ResponseEntity<ProductResponseDto> updateStock(@PathVariable String productId, @PathVariable Integer quantity)
+    {
+        return new ResponseEntity<>(productService.updateStock(productId,quantity),HttpStatus.OK);
     }
 
 }

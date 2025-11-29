@@ -36,18 +36,23 @@ public class PaymentServiceImpl implements PaymentService {
         boolean paymentSuccess = new Random().nextBoolean();
         if(paymentSuccess)
         {
+            Payment paymentOld = paymentRepository.findByOrderId(payment.getOrderId());
+
+            if(paymentOld != null)
+                throw new RuntimeException("you have already done payment");
+
             payment.setPaymentStatus("SUCCESS");
             payment.setTransactionId(UUID.randomUUID().toString());
             orderClient.updateOrderStatus(paymentRequestDto.getOrderId(), "CONFIRMED");
+            paymentRepository.save(payment);
         }
         else
         {
             payment.setPaymentStatus("FAILED");
             payment.setTransactionId("Not Available");
-            orderClient.updateOrderStatus(paymentRequestDto.getOrderId(), "CANCELLED");
         }
 
-        paymentRepository.save(payment);
+
 
         return PaymentResponseDto.builder()
                 .paymentId(payment.getPaymentId())

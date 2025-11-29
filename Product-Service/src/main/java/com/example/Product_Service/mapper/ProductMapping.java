@@ -17,7 +17,9 @@ public class ProductMapping {
                 .price(product.getPrice())
                 .stockQuantity(product.getStockQuantity())
                 .isStock(product.getIsStock())
-                .categoryname(product.getCategory().getName())
+                .createdAt(product.getCreatedAt())
+                .updatedAt(product.getUpdatedAt())
+                .category(product.getCategory())
                 .build();
     }
 }

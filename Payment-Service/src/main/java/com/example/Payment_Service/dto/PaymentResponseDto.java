@@ -16,7 +16,7 @@ public class PaymentResponseDto {
 
     private String customerId;
 
-    private String amount;
+    private Double amount;
 
     private LocalDateTime paymentDate;
 

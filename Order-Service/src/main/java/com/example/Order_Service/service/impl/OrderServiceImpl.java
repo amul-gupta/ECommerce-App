@@ -26,17 +26,19 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductClient productClient;
 
-    public OrderResponseDto placeOrder(OrderRequestDto orderRequestDto)
+    public OrderResponseDto create(OrderRequestDto orderRequestDto)
     {
          String customerId = orderRequestDto.getCustomerId();
          List<OrderItemRequestDto> items = orderRequestDto.getItems();
 
         Order order = new Order();
         order.setOrderId(UUID.randomUUID().toString());
+
         Double totalAmount = 0.0;
 
         //get order items details
         List<OrderItem> orderItemList = new ArrayList<>();
+
         for(OrderItemRequestDto item : items)
         {
             String productId = item.getProductId();
@@ -45,24 +47,32 @@ public class OrderServiceImpl implements OrderService {
             ProductResponseDto productResponseDto = productClient.getProduct(productId);
 
             //check and update stock
+            if(productResponseDto.getStockQuantity() >= quantity) {
+                productClient.updateStock(productId, -quantity);
+            }
+            else
+            {
+                throw new RuntimeException("out of stock");
+            }
 
             //set order items
             OrderItem orderItem = OrderItem.builder()
+                    .orderItemId(UUID.randomUUID().toString())
                     .orderId(order.getOrderId())
                     .productId(productId)
                     .quantity(quantity)
-                    .price(productResponseDto.getPrice())
+                    .price(quantity*productResponseDto.getPrice())
                     .build();
             orderItemList.add(orderItem);
 
-            totalAmount = totalAmount + productResponseDto.getPrice();
+            totalAmount = totalAmount + (productResponseDto.getPrice()*quantity);
 
         }
 
         //save order and order items
         order.setCustomerId(customerId);
         order.setTotalAmount(totalAmount);
-        order.setStatus(OrderStatus.PENDING);
+        order.setStatus("PENDING");
         orderRepository.save(order);
         orderItemRepository.saveAll(orderItemList);
 
@@ -72,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderId(order.getOrderId())
                 .customerId(customerId)
                 .orderedDate(order.getOrderedDate())
-                .status(OrderStatus.PENDING)
+                .status("PENDING")
                 .totalAmount(order.getTotalAmount())
                 .items(orderItemList)
                 .build();
@@ -117,7 +127,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponseDto updateOrderStatus(String orderId, OrderStatus status) {
+    public OrderResponseDto updateOrderStatus(OrderStatusUpdateRequestDto orderStatusUpdateRequestDto) {
+
+        String orderId = orderStatusUpdateRequestDto.getOrderId();
+        String status = orderStatusUpdateRequestDto.getStatus();
 
         Order order = orderRepository.findById(orderId).orElseThrow(()->
                 new RuntimeException("order with id not found"));

@@ -21,9 +21,10 @@ public class OrderResponseDto {
 
     private LocalDateTime orderedDate;
 
-    private OrderStatus status;
+    private String status;
 
     private Double totalAmount;
 
     private List<OrderItem> items = new ArrayList<>();
+
 }

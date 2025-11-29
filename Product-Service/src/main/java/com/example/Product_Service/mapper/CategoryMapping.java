@@ -13,6 +13,7 @@ public class CategoryMapping {
                 .name(category.getName())
                 .catgeoryId(category.getCatgeoryId())
                 .description(category.getDescription())
+                .productList(category.getProductList())
                 .build();
     }
 }

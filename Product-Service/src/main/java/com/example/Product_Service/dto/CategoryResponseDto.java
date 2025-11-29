@@ -1,7 +1,9 @@
 package com.example.Product_Service.dto;
 
+import com.example.Product_Service.entity.Product;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -16,5 +18,7 @@ public class CategoryResponseDto {
     private String name;
 
     private String description;
+
+    private List<Product> productList = new ArrayList<>();
 
 }

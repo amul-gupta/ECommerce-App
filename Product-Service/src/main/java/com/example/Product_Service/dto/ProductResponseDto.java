@@ -2,6 +2,7 @@ package com.example.Product_Service.dto;
 
 import java.time.LocalDateTime;
 
+import com.example.Product_Service.entity.Category;
 import lombok.*;
 
 
@@ -28,5 +29,5 @@ public class ProductResponseDto {
 
     private LocalDateTime updatedAt;
 
-    private String categoryname;
+    private Category category;
 }

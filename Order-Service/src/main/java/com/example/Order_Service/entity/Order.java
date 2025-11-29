@@ -1,10 +1,7 @@
 package com.example.Order_Service.entity;
 
 
-import com.example.Order_Service.dto.OrderStatus;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -28,5 +25,6 @@ public class Order {
 
     private Double totalAmount;
 
-    private OrderStatus status;
+    private String status;
+
 }

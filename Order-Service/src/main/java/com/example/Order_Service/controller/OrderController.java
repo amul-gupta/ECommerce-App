@@ -2,9 +2,8 @@ package com.example.Order_Service.controller;
 
 import com.example.Order_Service.dto.OrderRequestDto;
 import com.example.Order_Service.dto.OrderResponseDto;
-import com.example.Order_Service.dto.OrderStatus;
+import com.example.Order_Service.dto.OrderStatusUpdateRequestDto;
 import com.example.Order_Service.service.OrderService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class OrderController {
     @PostMapping("/create")
     public ResponseEntity<OrderResponseDto> create(@RequestBody OrderRequestDto orderRequestDto)
     {
-        OrderResponseDto saved =  orderService.placeOrder(orderRequestDto);
+        OrderResponseDto saved =  orderService.create(orderRequestDto);
         return new ResponseEntity<>(saved , HttpStatus.CREATED);
     }
 
@@ -36,7 +35,7 @@ public class OrderController {
     }
 
     //get order by customer id
-    @GetMapping("/getOrderByCustomerId/{orderId}")
+    @GetMapping("/getOrderByCustomerId/{customerId}")
     public ResponseEntity<List<OrderResponseDto>> getOrderByCustomerId(@PathVariable String customerId)
     {
         List<OrderResponseDto> saved =  orderService.getOrderByCustomerId(customerId);
@@ -45,9 +44,9 @@ public class OrderController {
 
     //update order status
     @PutMapping("/updateStatus")
-    public ResponseEntity<OrderResponseDto> updateStatus(@PathVariable String orderId,@RequestParam OrderStatus status)
+    public ResponseEntity<OrderResponseDto> updateStatus(@RequestBody OrderStatusUpdateRequestDto orderStatusUpdateRequestDto)
     {
-        return new ResponseEntity<>(orderService.updateOrderStatus(orderId,status), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(orderService.updateOrderStatus(orderStatusUpdateRequestDto), HttpStatus.ACCEPTED);
     }
 
 

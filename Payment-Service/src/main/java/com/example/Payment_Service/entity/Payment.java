@@ -23,9 +23,9 @@ public class Payment {
 
     private String customerId;
 
-    private String amount;
+    private Double amount;
 
-    private LocalDateTime paymentDate;
+    private LocalDateTime paymentDate = LocalDateTime.now();
 
     private String paymentStatus;
 

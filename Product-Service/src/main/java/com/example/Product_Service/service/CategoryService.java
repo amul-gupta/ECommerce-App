@@ -18,4 +18,5 @@ public interface CategoryService {
     List<CategoryResponseDto> getAllCategories();
 
     //get by id
+
 }

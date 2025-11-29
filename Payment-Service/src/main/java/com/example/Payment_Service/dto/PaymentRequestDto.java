@@ -14,5 +14,5 @@ public class PaymentRequestDto {
 
     private String customerId;
 
-    private String amount;
+    private Double amount;
 }

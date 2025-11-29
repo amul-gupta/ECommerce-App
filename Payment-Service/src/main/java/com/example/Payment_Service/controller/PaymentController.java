@@ -25,7 +25,7 @@ public class PaymentController {
     }
 
     //to know the status of order id
-    @GetMapping("/status/order/{orderId}")
+    @GetMapping("/status/Id/{orderId}")
     public ResponseEntity<PaymentResponseDto> getStatusOfOrderId(@PathVariable String orderId)
     {
         PaymentResponseDto saved = paymentService.getStatusOfOrderId(orderId);

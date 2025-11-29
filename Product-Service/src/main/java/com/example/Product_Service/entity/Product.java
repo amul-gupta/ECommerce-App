@@ -1,6 +1,7 @@
 package com.example.Product_Service.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +16,6 @@ import java.time.LocalDateTime;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String productId;
 
     private String name;
@@ -33,6 +33,7 @@ public class Product {
     private LocalDateTime updatedAt;
 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_Id")
     private Category category;

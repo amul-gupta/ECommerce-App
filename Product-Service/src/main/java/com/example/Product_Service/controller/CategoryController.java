@@ -24,6 +24,15 @@ public class CategoryController {
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
+    //update
+
+
+    //delete
+
+
+    //get by id
+
+
     //get all
     @GetMapping("/getAll")
     public ResponseEntity<List<CategoryResponseDto>> getAllCategories()

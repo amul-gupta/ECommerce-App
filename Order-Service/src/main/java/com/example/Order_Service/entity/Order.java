@@ -1,6 +1,7 @@
 package com.example.Order_Service.entity;
 
 
+import com.example.Order_Service.dto.OrderStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +20,6 @@ import java.time.LocalDateTime;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String orderId;
 
     private String customerId;
@@ -28,5 +28,5 @@ public class Order {
 
     private Double totalAmount;
 
-    private String status;
+    private OrderStatus status;
 }

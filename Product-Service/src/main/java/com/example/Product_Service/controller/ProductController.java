@@ -37,5 +37,10 @@ public class ProductController {
     }
 
     //get by id
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponseDto> getById(@PathVariable String productId)
+    {
+        return new ResponseEntity<>(productService.getProductById(productId),HttpStatus.OK);
+    }
 
 }

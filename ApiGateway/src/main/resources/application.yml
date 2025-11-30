@@ -8,6 +8,14 @@ spring:
               uri : http://localhost:6000
               predicates:
                 - Path=/product/** , /category/**
+              filters:
+                  name : RequestRateLimiter
+                  args:
+                          KeyResolver : "#{@ipKeyResolver}"
+                          redis-rate-limiter.replenishRate : 2
+                          redis-rate-limiter.burstCapacity : 2
+
+
 
             - id: order-service-route
               uri: http://localhost:6001
